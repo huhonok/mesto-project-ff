@@ -1,4 +1,4 @@
-import { createCard } from "./card.js";
+import { createCard, handleLikeCard } from "./card.js";
 import { initialCards } from "./cards.js";
 import { openModal, closeModal } from "./modal.js";
 import "./index.css";
@@ -14,25 +14,20 @@ const popupTypeImage = document.querySelector(".popup_type_image");
 const editProfileForm = popupTypeEdit.querySelector(".popup__form");
 const createNewCardForm = popupTypeNewCard.querySelector(".popup__form");
 
-let nameInput = document.querySelector(".profile__title").textContent;
-let jobInput = document.querySelector(".profile__description").textContent;
+const profileTitle = document.querySelector(".profile__title");
+const profileDescription = document.querySelector(".profile__description");
+
+const popupImage = popupTypeImage.querySelector(".popup__image");
+const popupCaption = popupTypeImage.querySelector(".popup__caption");
 
 initialCards.forEach(function (card) {
   placesItems.append(createCard(card, handleLikeCard, handleOpenImage));
 });
 
-function handleLikeCard(element) {
-  const classes = element.classList;
-  if (classes.contains("card__like-button_is-active")) {
-    classes.remove("card__like-button_is-active");
-  } else {
-    classes.add("card__like-button_is-active");
-  }
-}
-
 function handleOpenImage(card) {
-  popupTypeImage.querySelector(".popup__image").src = card.link;
-  popupTypeImage.querySelector(".popup__caption").textContent = card.name;
+  popupImage.src = card.link;
+  popupImage.alt = card.name;
+  popupCaption.textContent = card.name;
   openModal(popupTypeImage);
 }
 
@@ -58,17 +53,14 @@ function handleCreateCardFormSubmit(evt) {
 
 function handleEditFormSubmit(evt) {
   evt.preventDefault();
-  nameInput = editProfileForm.elements.name.value;
-  jobInput = editProfileForm.elements.description.value;
-
-  document.querySelector(".profile__title").textContent = nameInput;
-  document.querySelector(".profile__description").textContent = jobInput;
+  profileTitle.textContent = editProfileForm.elements.name.value;
+  profileDescription.textContent = editProfileForm.elements.description.value;
   closeModal(popupTypeEdit);
 }
 
 function handleEditProfileButtonClick() {
-  editProfileForm.elements.name.value = nameInput;
-  editProfileForm.elements.description.value = jobInput;
+  editProfileForm.elements.name.value = profileTitle.textContent;
+  editProfileForm.elements.description.value = profileDescription.textContent;
   openModal(popupTypeEdit);
 }
 

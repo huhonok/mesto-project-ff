@@ -1,59 +1,40 @@
+function handleEscape(evt) {
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_is-opened");
+    closeModal(openedPopup);
+  }
+}
+function handleMouseDown(evt) {
+  const openedPopup = document.querySelector(".popup_is-opened");
+  if (evt.target.classList.contains("popup_is-opened")) {
+    closeModal(openedPopup);
+  }
+  if (evt.target.classList.contains("popup__close")) {
+    closeModal(openedPopup);
+  }
+}
+
 function openModal(popup) {
-  const popupCloseButton = popup.querySelector(".popup__close");
-
-  const onCloseButtonFunction = (evt) => {
-    closeModal(popup);
-    removeListeners(popupCloseButton, popup, onCloseButtonFunction, onKeydownFunction, onClickFunction);
-  };
-
-  const onKeydownFunction = (evt) => {
-    if (evt.key === "Escape") {
-      closeModal(popup);
-      removeListeners(
-        popupCloseButton,
-        popup,
-        onCloseButtonFunction,
-        onKeydownFunction,
-        onClickFunction
-      );
-    }
-  };
-  const onClickFunction = (evt) => {
-    if (evt.currentTarget === evt.target) {
-      closeModal(popup);
-      removeListeners(
-        popupCloseButton,
-        popup,
-        onCloseButtonFunction,
-        onKeydownFunction,
-        onClickFunction
-      );
-    }
-  };
-
-  popupCloseButton.addEventListener("click", onCloseButtonFunction);
-  document.addEventListener("keydown", onKeydownFunction);
-  popup.addEventListener("click", onClickFunction);
-
   popup.classList.remove("popup_is-animated");
-  popup.classList.add("popup_is-opened");
+  popup.classList.add("popup_is-animated");
+  setTimeout(() => {
+    popup.classList.add("popup_is-opened");
+  }, 1);
+
+  document.addEventListener("keydown", handleEscape);
+  document.querySelectorAll(".popup").forEach((popup) => {
+    popup.addEventListener("mousedown", handleMouseDown);
+  });
 }
 
 function closeModal(popup) {
   popup.classList.add("popup_is-animated");
   popup.classList.remove("popup_is-opened");
-}
 
-function removeListeners(
-  popupCloseButton,
-  popup,
-  onCloseButtonFunction,
-  onKeydownFunction,
-  onClickFunction
-) {
-  popupCloseButton.removeEventListener("click", onCloseButtonFunction);
-  document.removeEventListener("keydown", onKeydownFunction);
-  popup.removeEventListener("click", onClickFunction);
+  document.removeEventListener("keydown", handleEscape);
+  document.querySelectorAll(".popup").forEach((popup) => {
+    popup.addEventListener("mousedown", handleMouseDown);
+  });
 }
 
 export { openModal, closeModal };
