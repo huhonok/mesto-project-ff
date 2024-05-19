@@ -11,8 +11,8 @@ const popupTypeEdit = document.querySelector(".popup_type_edit");
 const popupTypeNewCard = document.querySelector(".popup_type_new-card");
 const popupTypeImage = document.querySelector(".popup_type_image");
 
-const editProfileForm = popupTypeEdit.querySelector(".popup__form");
-const createNewCardForm = popupTypeNewCard.querySelector(".popup__form");
+const editProfileForm = document.forms["edit_profile"];
+const createNewCardForm = document.forms["new_place"];
 
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
