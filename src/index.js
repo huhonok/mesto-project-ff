@@ -64,7 +64,19 @@ function handleEditProfileButtonClick() {
   openModal(popupTypeEdit);
 }
 
+function handleMouseDown(evt) {
+  if (
+    evt.target.classList.contains("popup_is-opened") ||
+    evt.target.classList.contains("popup__close")
+  ) {
+    closeModal(evt.currentTarget);
+  }
+}
+
 popupTypeNewCard.addEventListener("submit", handleCreateCardFormSubmit);
 popupTypeEdit.addEventListener("submit", handleEditFormSubmit);
 editProfileButton.addEventListener("click", handleEditProfileButtonClick);
 addProfileButton.addEventListener("click", () => openModal(popupTypeNewCard));
+document.querySelectorAll(".popup").forEach((popup) => {
+  popup.addEventListener("mousedown", handleMouseDown);
+});
