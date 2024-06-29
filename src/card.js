@@ -1,7 +1,7 @@
 import { addLike, removeLike } from "./api.js";
 const cardTemplate = document.querySelector("#card-template").content;
 
-function createCard(card, likeCard, openImage, myId) {
+function createCard(card, likeCard, openImage, deleteCard, myId) {
   const element = cardTemplate.querySelector(".card").cloneNode(true);
   const cardImage = element.querySelector(".card__image");
   const cardTitle = element.querySelector(".card__title");
@@ -17,17 +17,16 @@ function createCard(card, likeCard, openImage, myId) {
   if (card.owner._id !== myId) {
     cardDeleteButton.classList.add("card__delete-button-hidden");
   } else {
-    cardDeleteButton.addEventListener("click", () => removeCard(element));
+    cardDeleteButton.addEventListener("click", () => deleteCard(element, card));
   }
   cardLikeButton.addEventListener("click", () =>
     likeCard(cardLikeButton, cardLikes, card)
   );
   cardImage.addEventListener("click", () => openImage(card));
+  if (isLikedByMe(card.likes, myId)) {
+    cardLikeButton.classList.toggle("card__like-button_is-active");
+  }
   return element;
-}
-
-function removeCard(card) {
-  card.remove();
 }
 
 function handleLikeCard(button, caption, card) {
@@ -44,4 +43,12 @@ function handleLikeCard(button, caption, card) {
   });
 }
 
+function isLikedByMe(likes, myId) {
+  for (let i = 0; i < likes.length; i++) {
+    if (likes[i]._id === myId) {
+      return true;
+    }
+  }
+  return false;
+}
 export { createCard, handleLikeCard };

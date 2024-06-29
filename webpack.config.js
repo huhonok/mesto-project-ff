@@ -30,9 +30,18 @@ module.exports = {
         exclude: "/node_modules/",
       },
       {
-        // регулярное выражение, которое ищет все файлы с такими расширениями
-        test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: "asset/resource",
+        generator: {
+          filename: "images/[name].[hash][ext]",
+        },
+      },
+      {
+        test: /\.(woff(2)?|eot|ttf|otf)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "fonts/[name].[hash][ext]",
+        },
       },
       {
         // применять это правило только к CSS-файлам
@@ -43,9 +52,9 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
-            options: { importLoaders: 1 }
+            options: { importLoaders: 1 },
           },
-          'postcss-loader'
+          "postcss-loader",
         ],
       },
     ],
@@ -55,8 +64,7 @@ module.exports = {
       template: "./src/index.html", // путь к файлу index.html
     }),
     new CleanWebpackPlugin(), // использовали плагин
-    new MiniCssExtractPlugin() // подключение плагина для объединения файлов
-
+    new MiniCssExtractPlugin(), // подключение плагина для объединения файлов
   ], // добавьте массив
 };
 
