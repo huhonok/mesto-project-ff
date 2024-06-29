@@ -44,11 +44,6 @@ function handleLikeCard(button, caption, card) {
 }
 
 function isLikedByMe(likes, myId) {
-  for (let i = 0; i < likes.length; i++) {
-    if (likes[i]._id === myId) {
-      return true;
-    }
-  }
-  return false;
+  return likes.some((like) => like._id === myId);
 }
 export { createCard, handleLikeCard };
