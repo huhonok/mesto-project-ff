@@ -6,7 +6,8 @@
   border-radius: 50%;
   background-size: cover;
   background-position: center;
-  margin: 0 29px 0 0;
+  margin: 0 0 0 0;
+  display: block;
 }
 
 @media screen and (max-width: 740px) {
@@ -19,4 +20,24 @@
   .profile__image {
     margin-right: 0;
   }
+}
+
+.edit__profile__image {
+  opacity: 0;
+  align-self: center;
+  position: absolute;
+}
+
+.edit__profile__image__button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  padding-right: 29px;
+  background-color: transparent;
+  border: 0;
+}
+
+.edit__profile__image__button:hover  .edit__profile__image{
+  opacity: 1;
 }
